@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NK18-malware hunting</title>
+    <script src="{{ url_for('static', filename = 'echarts.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'jquery-3.5.1.js') }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'assets/css/main.css') }}" />
+    
+</head>
+<body>
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="index.html" class="logo">Theory</a>
+					<nav id="nav">
+						<a href="index.html">Home</a>
+						<a href="generic.html">Generic</a>
+						<a href="elements.html">Elements</a>
+					</nav>
+					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+				</div>
+			</header>
+
+		<!-- Banner -->
+			<section id="banner">
+				<p style="background-image: url({{ url_for('static', filename = 'static/images/banner.jpg') }})">
+				<h1>Welcome to NK18-malware hunting</h1>
+				<p>NK18-malware hunting for DGA</p>
+				</p>
+			</section>
+			
+		<!-- One -->
+			<section id="one" class="wrapper">
+				<div class="inner">
+					<div class="flex flex-3">
+						<!--为echarts准备一个容器，画图就画在里面-->
+						<div id="box" style="width: 1200px;height: 600px;"></div>
+						
+					</div>
+					<div id="box2" style="width: 1200px;height: 600px;"></div>
+				</div>
+			</section>
+		<!-- Two -->
+			<section id="two" class="wrapper style1 special">
+				<div class="inner">
+					<header>
+						<h2>提交url</h2>
+						<p>输入url返回结果</p>
+					</header>
+					<div class="flex flex-4">
+						<form action="http://39.105.177.36:5000/result"" method="POST">
+     							<p>Name <input type = "text" name = "Name" /></p>
+     							<p><input type = "submit" value = "submit" /></p>
+  						</form>
+
+					</div>
+				</div>
+			</section>
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<div class="flex">
+						<div class="copyright">
+							&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
+						</div>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon fa-linkedin"><span class="label">linkedIn</span></a></li>
+							<li><a href="#" class="icon fa-pinterest-p"><span class="label">Pinterest</span></a></li>
+							<li><a href="#" class="icon fa-vimeo"><span class="label">Vimeo</span></a></li>
+						</ul>
+					</div>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<!--<script src="assets/js/jquery.min.js"></script>-->
+			<script src="{{ url_for('static', filename = 'assets/js/skel.min.js') }}"></script>
+			<script src="{{ url_for('static', filename = 'assets/js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename = 'assets/js/main.js') }}"></script>
+
+
+<!--<form action="http://39.105.177.36:5000/result"" method="POST">
+     <p>Name <input type = "text" name = "Name" /></p>
+     <p><input type = "submit" value = "submit" /></p>
+  </form>
+-->
+
+
+<script>
+var myChart = echarts.init(document.getElementById("box"));
+		myChart.setOption({
+            //图标题
+			title:{text: '每日获取原始情报数量'},
+            //图提示框
+			tootip:{},
+            //图例
+			legend:{
+				data:['数量']
+			},
+            //x轴属性
+			xAxis:{
+				data:{{ my_dict['datetime']|tojson }}
+			},
+            //y轴属性
+			yAxis:{},
+			//图属性
+			series:[
+				{
+					name:'数量',
+					type:'bar',//图类型：柱状图
+					color:['#3398DB'],//设置图像颜色
+					data:{{ my_dict['data'] }}//图表的数值
+				}
+			]
+		});
+
+		
+				
+
+</script>
+
+<script>
+var myChart2 = echarts.init(document.getElementById("box2"));
+		myChart2.setOption({
+            //图标题
+			title:{text: '情报来源'},
+
+			//图属性
+			xAxis:{
+				data:{{ my_dict2['source']|tojson }},
+			axisLabel:{
+				interval: 0,
+				rotate: 90,
+			}
+			},
+			yAxis:{},
+			series:[
+				{
+					name:'数量',
+					type:'bar',//图类型：
+					color:['#3398DB'],//设置图像颜色
+					data:{{ my_dict2['num'] }}//图表的数值
+				}
+			]
+		});
+
+		
+				
+
+</script>
+
+
+</body>
+</html>
+
